@@ -1,0 +1,145 @@
+AJAX - 服务器响应
+
+服务器响应
+
+如需获得来自服务器的响应，请使用 XMLHttpRequest 对象的 responseText 或 responseXML 属性。
+
+responseText 	获得字符串形式的响应数据。
+responseXML 	获得 XML 形式的响应数据。
+
+
+responseText 属性
+如果来自服务器的响应并非 XML，请使用 responseText 属性。
+
+esponseText 属性返回字符串形式的响应，因此您可以这样使用：
+
+document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+
+
+实例：
+<html>
+<head>
+<script type="text/javascript">
+function loadXMLDoc()
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/html/test1.txt",true);
+xmlhttp.send();
+}
+</script>
+</head>
+<body>
+
+<div id="myDiv"><h2>Let AJAX change this text</h2></div>
+<button type="button" onclick="loadXMLDoc()">通过 AJAX 改变内容</button>
+
+</body>
+</html>
+
+实例测试通过,原因应该是不能跨域 
+
+responseXML 属性
+
+如果来自服务器的响应是 XML，而且需要作为 XML 对象进行解析，请使用 responseXML 属性：
+
+[root@104-250-136-218 html]# cat ajax1.html 
+
+<html>
+
+<head>
+<script>
+
+function loadXMLDoc() {
+  var xmlhttp;
+  var txt,x,i;
+  if (window.XMLHttpRequest)
+  { //CODE FOR IE7+,CHROME,FIREFOX,SAFARI
+    xmlhttp=new XMLHttpRequest();
+  }
+  else {//CODE FOR IE5,IE6
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+
+  xmlhttp.onreadystatechange=function () {
+    if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+      xmlDoc=xmlhttp.responseXML;
+      txt="";
+      x=xmlDoc.getElementsByTagName("title");
+      for (i=0;i<x.length;i++) {
+        txt=txt +x[i].childNodes[0].nodeValue + "<br />";
+      }
+      document.getElementById("myDiv").innerHTML=txt;
+    }
+  }
+
+  xmlhttp.open("GET","/html/book.xml",true);
+  xmlhttp.send();
+}
+
+</script>
+</head>
+
+<body>
+
+<h2> AJAX XHR </h2>
+<button type="button" onclick="loadXMLDoc()">REQUEST_DATA</button>
+<div id="myDiv"><div>
+
+</body>
+</html>
+
+
+http://www.w3school.com.cn/example/xmle/books.xml  
+
+
+
+
+UPDATE BY SHENGKAI 2017-6-11 2:24 AM 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
